@@ -10,15 +10,12 @@ body {
   color: #222;
 }
 
-/* Containers */
-
 .container {
   width: 90%;
   max-width: 1200px;
   margin: auto;
 }
 
-/* Headings */
 
 h1,
 h2,
@@ -26,13 +23,9 @@ h3 {
   margin-bottom: 10px;
 }
 
-/* Links */
-
 a {
   text-decoration: none;
 }
-
-/* Utility */
 
 .text-center {
   text-align: center;
@@ -42,7 +35,6 @@ a {
   margin-top: 20px;
 }
 
-/* Buttons */
 .btn {
   display: inline-block;
 
@@ -59,8 +51,6 @@ a {
   transition: 0.2s ease;
 }
 
-/* Primary */
-
 .btn-primary {
   background: #0077cc;
 
@@ -70,8 +60,6 @@ a {
 .btn-primary:hover {
   background: #005fa3;
 }
-
-/* Danger */
 
 .btn-danger {
   background: #ef4b57;
