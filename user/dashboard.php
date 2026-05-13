@@ -211,13 +211,29 @@ $result = $stmt->get_result();
 
 </div>
 
-<!-- JAVASCRIPT -->
-
 <script>
 
 const buttons = document.querySelectorAll('.sidebar-btn');
 
 const tabs = document.querySelectorAll('.dashboard-tab');
+
+
+function activateTab(tabName) {
+    const button = document.querySelector(`.sidebar-btn[data-tab="${tabName}"]`);
+    if (button) {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        tabs.forEach(tab => tab.classList.remove('active-tab'));
+        button.classList.add('active');
+        document.getElementById(tabName).classList.add('active-tab');
+    }
+}
+
+window.addEventListener('load', () => {
+    const hash = window.location.hash.substring(1); // Remove #
+    if (hash) {
+        activateTab(hash);
+    }
+});
 
 buttons.forEach(button => {
 
@@ -225,19 +241,7 @@ buttons.forEach(button => {
 
         const target = button.dataset.tab;
 
-        buttons.forEach(btn =>
-            btn.classList.remove('active')
-        );
-
-        tabs.forEach(tab =>
-            tab.classList.remove('active-tab')
-        );
-
-        button.classList.add('active');
-
-        document
-            .getElementById(target)
-            .classList.add('active-tab');
+        activateTab(target);
 
     });
 

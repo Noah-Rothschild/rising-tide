@@ -98,7 +98,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         Dashboard
                     </a>
 
-                    <a href="/rising-tide/user/settings.php">
+                    <a href="/rising-tide/user/dashboard.php#settings">
                         Account Settings
                     </a>
 
