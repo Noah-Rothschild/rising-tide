@@ -25,10 +25,44 @@ include('../includes/header.php');
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='dashboard-card'>";
+
+                echo "<img 
+                        class='product-image'
+                        src='../assets/images/uploads/" . htmlspecialchars($row['image']) . "'
+                        alt='" . htmlspecialchars($row['title']) . "'
+                    >";
+
+                echo "<div class='dashboard-card-content'>";
+
                 echo "<h2>" . htmlspecialchars($row['title']) . "</h2>";
+
                 echo "<p>" . htmlspecialchars($row['description']) . "</p>";
-                echo "<p>Price: R" . number_format($row['price'], 2) . "</p>";
-                echo "<img class='product-image' src='../assets/images/uploads/" . htmlspecialchars($row['image']) . "' alt='" . htmlspecialchars($row['title']) . "'>";
+
+                echo "<p class='product-price'>
+                        R" . number_format($row['price'], 2) . "
+                    </p>";
+
+                echo "<div class='card-buttons'>";
+
+                echo "<a 
+                        class='btn btn-primary'
+                        href='../products/edit.php?id=" . $row['id'] . "'
+                    >
+                        Edit
+                    </a>";
+
+                echo "<a 
+                        class='btn btn-danger'
+                        href='../products/delete.php?id=" . $row['id'] . "'
+                        onclick='return confirm(\"Delete this product?\")'
+                    >
+                        Delete
+                    </a>";
+
+                echo "</div>";
+
+                echo "</div>";
+
                 echo "</div>";
             }
         } else {

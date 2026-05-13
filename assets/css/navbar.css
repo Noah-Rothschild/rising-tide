@@ -1,0 +1,217 @@
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  height: 75px;
+
+  background: white;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0 40px;
+
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.navbar-left {
+  display: flex;
+
+  align-items: center;
+}
+
+/* Logo */
+
+.logo {
+  font-size: 1.6rem;
+
+  font-weight: 800;
+
+  color: #111;
+
+  text-decoration: none;
+}
+
+/* =========================
+   CENTER NAVIGATION
+========================= */
+
+.navbar-center {
+  display: flex;
+
+  gap: 35px;
+}
+
+.navbar-center a {
+  text-decoration: none;
+
+  color: #444;
+
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.navbar-center a:hover {
+  color: #0077cc;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.navbar-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.navbar-search input {
+  width: 220px;
+
+  padding: 10px 14px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  background: #f8f8f8;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.navbar-search input:focus {
+  border-color: #0077cc;
+
+  background: white;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.dropdown {
+  position: relative;
+}
+
+/* Button */
+
+.dropdown-btn {
+  border: none;
+
+  background: #f5f5f5;
+
+  padding: 10px 14px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+}
+
+/* Dropdown Content */
+
+.dropdown-content {
+  position: absolute;
+
+  top: 50px;
+
+  right: 0;
+
+  min-width: 180px;
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+
+  overflow: hidden;
+
+  display: none;
+
+  z-index: 100;
+}
+
+/* Links */
+
+.dropdown-content a {
+  display: block;
+
+  padding: 14px 16px;
+
+  text-decoration: none;
+
+  color: #333;
+
+  transition: 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background: #f5f5f5;
+}
+
+/* Show Dropdown */
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-link {
+  text-decoration: none;
+
+  font-weight: 600;
+
+  color: #0077cc;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+
+    height: auto;
+
+    padding: 20px;
+
+    gap: 20px;
+  }
+
+  .navbar-center {
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .navbar-right {
+    flex-direction: column;
+  }
+
+  .navbar-search input {
+    width: 100%;
+  }
+}

@@ -2,37 +2,97 @@
 
 <div class="auth-page">
 
-    <div class="auth-card">
+    <!-- LEFT SIDE -->
 
-        <h1>Welcome Back</h1>
-        <p>Login to continue using Rising Tide.</p>
+    <div class="auth-left">
 
-        <form action="process_login.php" method="POST">
+        <div class="auth-card">
 
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Email Address" 
-                required
-            >
+            <div class="auth-title-box">
+                <h1>WELCOME BACK</h1>
+            </div>
 
-            <input 
-                type="password" 
-                name="password" 
-                placeholder="Password" 
-                required
-            >
+            <p class="auth-subtitle">
+                Please enter your details.
+            </p>
 
-            <button type="submit">
-                Login
-            </button>
+            <form class="auth-form" action="process_login.php" method="POST">
 
-        </form>
+                <!-- EMAIL -->
 
-        <p class="mt-20">
-            Don’t have an account?
-            <a href="register.php">Register here</a>
-        </p>
+                <div>
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div>
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="********"
+                        required
+                    >
+                </div>
+
+                <!-- OPTIONS -->
+
+                <div class="auth-options">
+
+                    <label class="remember-me">
+                        <input type="checkbox">
+                        Remember me
+                    </label>
+
+                    <a href="#">
+                        Forgot password
+                    </a>
+
+                </div>
+
+                <!-- BUTTONS -->
+
+                <button class="auth-btn-primary" type="submit">
+                    Sign in
+                </button>
+
+                <button class="auth-btn-google" type="button">
+                    Sign in with Google
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+
+                Don’t have an account?
+
+                <a href="register.php">
+                    Sign up for free!
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE IMAGE -->
+
+    <div class="auth-right">
+
+        <img
+            src="../assets/images/login-art.png"
+            alt="Login Art"
+        >
 
     </div>
 

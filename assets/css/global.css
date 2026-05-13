@@ -32,35 +32,6 @@ a {
   text-decoration: none;
 }
 
-/* Buttons */
-
-.btn {
-  display: inline-block;
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #0077cc;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #005fa3;
-}
-
-.btn-danger {
-  background-color: crimson;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: darkred;
-}
-
 /* Utility */
 
 .text-center {
@@ -69,4 +40,45 @@ a {
 
 .mt-20 {
   margin-top: 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+
+  padding: 10px 14px;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  text-align: center;
+
+  transition: 0.2s ease;
+}
+
+/* Primary */
+
+.btn-primary {
+  background: #0077cc;
+
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #005fa3;
+}
+
+/* Danger */
+
+.btn-danger {
+  background: #ef4b57;
+
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #d83b47;
 }
