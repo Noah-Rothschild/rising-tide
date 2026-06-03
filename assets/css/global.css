@@ -16,6 +16,19 @@ body {
   margin: auto;
 }
 
+.cart-icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  cursor: pointer;
+  margin-left: 12px;
+  transition: transform 0.2s ease;
+}
+
+.cart-icon img:hover {
+  transform: scale(1.1);
+}
+
 h1,
 h2,
 h3 {

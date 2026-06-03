@@ -61,10 +61,6 @@ if (session_status() === PHP_SESSION_NONE) {
             Marketplace
         </a>
 
-        <a href="/rising-tide/products/cart.php">
-            Cart
-        </a>
-
         <a href="/rising-tide/products/create.php">
             Sell
         </a>
@@ -82,6 +78,10 @@ if (session_status() === PHP_SESSION_NONE) {
             >
 
         </form>
+
+        <a href="/rising-tide/products/cart.php" class="cart-icon">
+            <img src="/rising-tide/assets/images/cart.jpg" alt="Cart">
+        </a>
 
 
         <?php if(isset($_SESSION['user_id'])): ?>

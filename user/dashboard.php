@@ -4,35 +4,39 @@ include('../includes/header.php');
 include('../config/db.php');
 
 $id = $_SESSION['user_id'];
+$role = $_SESSION['role'] ?? 'buyer';
 
+// Seller product count and list
+$totalProducts = 0;
+$productsResult = null;
+if ($role === 'seller') {
+    $productQuery = $conn->prepare("SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?");
+    $productQuery->bind_param("i", $id);
+    $productQuery->execute();
+    $productResult = $productQuery->get_result()->fetch_assoc();
+    $totalProducts = $productResult['total_products'];
 
-$productQuery = $conn->prepare("
-    SELECT COUNT(*) AS total_products
-    FROM products
-    WHERE seller_id = ?
-");
+    $stmt = $conn->prepare("SELECT * FROM products WHERE seller_id = ? ORDER BY created_at DESC");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $productsResult = $stmt->get_result();
+}
 
-$productQuery->bind_param("i", $id);
-
-$productQuery->execute();
-
-$productResult = $productQuery->get_result()->fetch_assoc();
-
-$totalProducts = $productResult['total_products'];
-
-
-$stmt = $conn->prepare("
-    SELECT *
-    FROM products
-    WHERE seller_id = ?
-    ORDER BY created_at DESC
-");
-
-$stmt->bind_param("i", $id);
-
-$stmt->execute();
-
-$result = $stmt->get_result();
+// Orders: buyers see their orders; sellers see orders that include their items
+$orders = [];
+if ($role === 'buyer') {
+    $ordersStmt = $conn->prepare("SELECT * FROM orders WHERE buyer_id = ? ORDER BY created_at DESC");
+    $ordersStmt->bind_param("i", $id);
+    $ordersStmt->execute();
+    $orders = $ordersStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+} else {
+    $ordersStmt = $conn->prepare(
+        "SELECT o.* FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.seller_id = ? GROUP BY o.id ORDER BY o.created_at DESC"
+    );
+    $ordersStmt->bind_param("i", $id);
+    $ordersStmt->execute();
+    $orders = $ordersStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 ?>
 
 <div class="dashboard-layout">
@@ -47,8 +51,14 @@ $result = $stmt->get_result();
             Overview
         </button>
 
+        <?php if ($role === 'seller'): ?>
         <button class="sidebar-btn" data-tab="products">
             Products
+        </button>
+        <?php endif; ?>
+
+        <button class="sidebar-btn" data-tab="orders">
+            Orders
         </button>
 
         <button class="sidebar-btn" data-tab="analytics">
@@ -104,8 +114,8 @@ $result = $stmt->get_result();
 
         </section>
 
-        <!-- PRODUCTS -->
-
+        <!-- PRODUCTS (sellers only) -->
+        <?php if ($role === 'seller'): ?>
         <section class="dashboard-tab" id="products">
 
             <div class="products-header">
@@ -130,8 +140,8 @@ $result = $stmt->get_result();
                     <span>Actions</span>
                 </div>
 
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while($row = $result->fetch_assoc()): ?>
+                <?php if ($productsResult && $productsResult->num_rows > 0): ?>
+                    <?php while($row = $productsResult->fetch_assoc()): ?>
                         <div class="dashboard-table-row">
                             <span class="dashboard-table-cell product-name">
                                 <?php echo htmlspecialchars($row['name']); ?>
@@ -157,6 +167,73 @@ $result = $stmt->get_result();
                 <?php endif; ?>
 
             </div>
+
+        </section>
+        <?php endif; ?>
+
+        <!-- ORDERS -->
+        <section class="dashboard-tab" id="orders">
+
+            <h1>Orders</h1>
+
+            <?php if (empty($orders)): ?>
+                <p>No orders found.</p>
+            <?php else: ?>
+                <div class="dashboard-table">
+
+                    <div class="dashboard-table-header">
+                        <span>Order ID</span>
+                        <span>Date</span>
+                        <span>Total</span>
+                        <span>Status</span>
+                        <span>Payment Status</span>
+                    </div>
+
+                    <?php foreach ($orders as $order): ?>
+                        <div class="dashboard-table-row">
+                            <span class="dashboard-table-cell order-id">
+                                #<?php echo intval($order['id']); ?>
+                            </span>
+                            <span class="dashboard-table-cell date">
+                                <?php echo htmlspecialchars($order['created_at']); ?>
+                            </span>
+                            <span class="dashboard-table-cell total">
+                                R<?php echo number_format($order['total_amount'], 2); ?>
+                            </span>
+                            <span class="dashboard-table-cell status">
+                                <?php echo htmlspecialchars($order['status']); ?>
+                            </span>
+                            <span class="dashboard-table-cell payment">
+                                <?php echo htmlspecialchars($order['payment_status']); ?>
+                            </span>
+                        </div>
+
+                        <!-- Order Items -->
+                        <div class="order-items-subrow">
+                            <div style="padding: 10px 15px; background: #f9f9f9; border-left: 3px solid #ddd;">
+                                <strong>Items:</strong>
+                                <ul style="margin: 8px 0 0 20px; padding: 0;">
+                                <?php
+                                if ($role === 'buyer') {
+                                    $itemsStmt = $conn->prepare("SELECT oi.*, p.name FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
+                                    $itemsStmt->bind_param("i", $order['id']);
+                                } else {
+                                    $itemsStmt = $conn->prepare("SELECT oi.*, p.name FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ? AND oi.seller_id = ?");
+                                    $itemsStmt->bind_param("ii", $order['id'], $id);
+                                }
+                                $itemsStmt->execute();
+                                $itemsResult = $itemsStmt->get_result();
+                                ?>
+                                <?php while ($it = $itemsResult->fetch_assoc()): ?>
+                                    <li><?php echo htmlspecialchars($it['name']); ?> — Qty: <?php echo intval($it['quantity']); ?> — R<?php echo number_format($it['price'], 2); ?></li>
+                                <?php endwhile; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
+            <?php endif; ?>
 
         </section>
 
