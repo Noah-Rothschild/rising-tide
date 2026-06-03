@@ -2,44 +2,73 @@
 
 <div class="auth-page">
 
-    <div class="auth-card">
+    <div class="auth-left">
 
-        <h1>Create Account</h1>
-        <p>Join Rising Tide and start selling today.</p>
+        <div class="auth-card">
 
-        <form action="process_register.php" method="POST">
+            <div class="auth-title-box">
+                <h1>CREATE ACCOUNT</h1>
+            </div>
 
-            <input 
-                type="text" 
-                name="username" 
-                placeholder="Username" 
-                required
-            >
+            <p class="auth-subtitle">
+                Join Rising Tide and start selling today.
+            </p>
 
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Email Address" 
-                required
-            >
+            <form class="auth-form" action="process_register.php" method="POST">
 
-            <input 
-                type="password" 
-                name="password" 
-                placeholder="Password" 
-                required
-            >
+                <div>
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
 
-            <button type="submit">
-                Register
-            </button>
+                <div>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
 
-        </form>
+                <div>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+                </div>
 
-        <p class="mt-20">
-            Already have an account?
-            <a href="login.php">Login here</a>
-        </p>
+                <button class="auth-btn-primary" type="submit">
+                    Register
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+                Already have an account?
+                <a href="login.php">
+                    Login here
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="auth-right">
+
+        <img
+            src="../assets/images/login-art.png"
+            alt="Register Art"
+        >
 
     </div>
 

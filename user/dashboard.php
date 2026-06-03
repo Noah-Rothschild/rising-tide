@@ -3,19 +3,16 @@ include('../includes/auth_check.php');
 include('../includes/header.php');
 include('../config/db.php');
 
-$user_id = $_SESSION['user_id'];
+$id = $_SESSION['user_id'];
 
-/* =========================
-   PRODUCT COUNT
-========================= */
 
 $productQuery = $conn->prepare("
     SELECT COUNT(*) AS total_products
     FROM products
-    WHERE user_id = ?
+    WHERE seller_id = ?
 ");
 
-$productQuery->bind_param("i", $user_id);
+$productQuery->bind_param("i", $id);
 
 $productQuery->execute();
 
@@ -23,18 +20,15 @@ $productResult = $productQuery->get_result()->fetch_assoc();
 
 $totalProducts = $productResult['total_products'];
 
-/* =========================
-   GET PRODUCTS
-========================= */
 
 $stmt = $conn->prepare("
     SELECT *
     FROM products
-    WHERE user_id = ?
+    WHERE seller_id = ?
     ORDER BY created_at DESC
 ");
 
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("i", $id);
 
 $stmt->execute();
 
@@ -142,7 +136,7 @@ $result = $stmt->get_result();
                         <div class="dashboard-card-content">
 
                             <h2>
-                                <?php echo htmlspecialchars($row['title']); ?>
+                                <?php echo htmlspecialchars($row['name']); ?>
                             </h2>
 
                             <p class="product-price">
@@ -165,6 +159,10 @@ $result = $stmt->get_result();
                                     href="../products/delete.php?id=<?php echo $row['id']; ?>"
                                 >
                                     Delete
+                                </a>
+
+                                <a class="btn btn-secondary" href="../products/edit.php?id=<?php echo $row['id']; ?>">
+                                    Edit
                                 </a>
 
                             </div>

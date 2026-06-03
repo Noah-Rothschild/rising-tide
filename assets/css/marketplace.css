@@ -50,9 +50,9 @@
 
 .category-pill:hover,
 .category-pill.active {
-  background: #0077cc;
+  background: purple;
   color: #fff;
-  border-color: #0077cc;
+  border-color: violet;
 }
 
 .category-dropdown {
@@ -137,8 +137,9 @@
 
 .marketplace-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
+  align-items: start;
 }
 
 .marketplace-card {

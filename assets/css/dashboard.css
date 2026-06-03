@@ -102,6 +102,65 @@
   margin-bottom: 30px;
 }
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+}
+
+.dashboard-card img,
+.product-image {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.dashboard-card-content {
+  padding: 20px;
+}
+
+.dashboard-card-content h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.product-price {
+  color: #0077cc;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-buttons .btn {
+  flex: 1;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
 .stat-card {
   background: white;
 

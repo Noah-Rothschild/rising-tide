@@ -45,6 +45,25 @@ textarea {
   min-height: 120px;
 }
 
+/* Form Groups */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+}
+
+.current-image {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 4px;
+}
+
 /* Submit Button */
 .form-container button[type="submit"] {
   padding: 1rem 2rem;

@@ -16,7 +16,6 @@ body {
   margin: auto;
 }
 
-
 h1,
 h2,
 h3 {
@@ -52,13 +51,13 @@ a {
 }
 
 .btn-primary {
-  background: #0077cc;
+  background: red;
 
   color: white;
 }
 
 .btn-primary:hover {
-  background: #005fa3;
+  background: red;
 }
 
 .btn-danger {

@@ -2,77 +2,59 @@
 include('../includes/header.php');
 include('../config/db.php');
 
-$query = "
-    SELECT 
-        products.*,
-        users.username
-    FROM products
-    JOIN users
-        ON products.user_id = users.id
-    ORDER BY products.created_at DESC
-";
-
-$result = $conn->query($query);
-
-function inferCategory(array $product): string {
-    if (!empty($product['category'])) {
-        return $product['category'];
-    }
-
-    $text = strtolower($product['title'] . ' ' . ($product['description'] ?? ''));
-
-    $mappings = [
-        'Clothing' => ['shirt', 'jacket', 'hoodie', 'jeans', 'dress', 'pants', 'skirt', 'shoes', 'cap'],
-        'Electronics' => ['phone', 'charger', 'headphone', 'camera', 'speaker', 'laptop', 'watch', 'tablet'],
-        'Home' => ['mug', 'lamp', 'candle', 'chair', 'table', 'sofa', 'pillow', 'blanket', 'decor'],
-        'Beauty' => ['soap', 'cream', 'lip', 'perfume', 'makeup', 'skincare', 'serum', 'lotion'],
-        'Books' => ['book', 'novel', 'journal', 'guide', 'manual', 'story', 'storybook'],
-        'Art' => ['print', 'poster', 'painting', 'art', 'sculpture', 'drawing', 'canvas'],
-    ];
-
-    foreach ($mappings as $category => $keywords) {
-        foreach ($keywords as $keyword) {
-            if (strpos($text, $keyword) !== false) {
-                return $category;
-            }
-        }
-    }
-
-    return 'General';
-}
-
 $selectedCategory = $_GET['category'] ?? 'All';
 $searchTerm = trim($_GET['search'] ?? '');
 $minPrice = isset($_GET['min_price']) && $_GET['min_price'] !== '' ? floatval($_GET['min_price']) : null;
 $maxPrice = isset($_GET['max_price']) && $_GET['max_price'] !== '' ? floatval($_GET['max_price']) : null;
 
+$categoryResult = $conn->query("SELECT id, name FROM categories ORDER BY name ASC");
+$allCategories = [
+    ['id' => 'All', 'name' => 'All'],
+];
+while ($category = $categoryResult->fetch_assoc()) {
+    $allCategories[] = $category;
+}
+
+$query = "
+    SELECT 
+        p.*,
+        COALESCE(u.username, u.name, 'Unknown Seller') AS seller_name,
+        COALESCE(c.name, 'Uncategorized') AS category_name
+    FROM products p
+    LEFT JOIN users u ON p.seller_id = u.id
+    LEFT JOIN categories c ON p.category_id = c.id
+    ORDER BY p.created_at DESC
+";
+
+$result = $conn->query($query);
+
 $products = [];
-$allCategories = ['All'];
-
 while ($product = $result->fetch_assoc()) {
-    $product['category'] = inferCategory($product);
-
-    if (!in_array($product['category'], $allCategories, true)) {
-        $allCategories[] = $product['category'];
-    }
-
     $products[] = $product;
 }
 
 function buildQuery(array $overrides = []): string {
     $params = array_merge($_GET, $overrides);
+
+    if (isset($params['category']) && $params['category'] === 'All') {
+        unset($params['category']);
+    }
+
     return http_build_query($params);
 }
+
+$baseQuery = buildQuery(['category' => 'All']);
+$baseQueryPrefix = $baseQuery === '' ? '?' : '?' . $baseQuery . '&';
 
 function matchesFilters(array $product): bool {
     global $selectedCategory, $searchTerm, $minPrice, $maxPrice;
 
-    if ($selectedCategory !== 'All' && $product['category'] !== $selectedCategory) {
+    if ($selectedCategory !== 'All' && (string) $product['category_id'] !== (string) $selectedCategory) {
         return false;
     }
 
     if ($searchTerm !== '') {
-        $text = strtolower($product['title'] . ' ' . ($product['description'] ?? '') . ' ' . $product['username'] . ' ' . $product['category']);
+        $text = strtolower($product['name'] . ' ' . ($product['description'] ?? '') . ' ' . $product['seller_name'] . ' ' . $product['category_name']);
         if (strpos($text, strtolower($searchTerm)) === false) {
             return false;
         }
@@ -106,20 +88,20 @@ $filteredProducts = array_filter($products, 'matchesFilters');
             <div class="category-pill-group">
                 <?php foreach ($allCategories as $category): ?>
                     <a
-                        class="category-pill<?php echo $selectedCategory === $category ? ' active' : ''; ?>"
-                        href="?<?php echo buildQuery(['category' => $category]); ?>"
+                        class="category-pill<?php echo (string) $selectedCategory === (string) $category['id'] ? ' active' : ''; ?>"
+                        href="?<?php echo buildQuery(['category' => $category['id']]); ?>"
                     >
-                        <?php echo htmlspecialchars($category); ?>
+                        <?php echo htmlspecialchars($category['name']); ?>
                     </a>
                 <?php endforeach; ?>
             </div>
 
             <div class="category-dropdown">
                 <label for="category-select">Category</label>
-                <select id="category-select" onchange="window.location.href='?<?php echo buildQuery(['category' => '']); ?>&category=' + encodeURIComponent(this.value);">
+                <select id="category-select" onchange="window.location.href='<?php echo $baseQueryPrefix; ?>category=' + encodeURIComponent(this.value);">
                     <?php foreach ($allCategories as $category): ?>
-                        <option value="<?php echo htmlspecialchars($category); ?>" <?php echo $selectedCategory === $category ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($category); ?>
+                        <option value="<?php echo htmlspecialchars($category['id']); ?>" <?php echo (string) $selectedCategory === (string) $category['id'] ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($category['name']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -143,8 +125,8 @@ $filteredProducts = array_filter($products, 'matchesFilters');
                     <label for="sidebar-category">Category</label>
                     <select id="sidebar-category" name="category">
                         <?php foreach ($allCategories as $category): ?>
-                            <option value="<?php echo htmlspecialchars($category); ?>" <?php echo $selectedCategory === $category ? 'selected' : ''; ?> >
-                                <?php echo htmlspecialchars($category); ?>
+                            <option value="<?php echo htmlspecialchars($category['id']); ?>" <?php echo (string) $selectedCategory === (string) $category['id'] ? 'selected' : ''; ?> >
+                                <?php echo htmlspecialchars($category['name']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -174,23 +156,23 @@ $filteredProducts = array_filter($products, 'matchesFilters');
             <?php endif; ?>
 
             <?php foreach ($filteredProducts as $product): ?>
-                <div class="marketplace-card" data-category="<?php echo htmlspecialchars($product['category']); ?>" data-price="<?php echo htmlspecialchars($product['price']); ?>" data-seller="<?php echo htmlspecialchars($product['username']); ?>">
+                <div class="marketplace-card" data-category="<?php echo htmlspecialchars($product['category_name']); ?>" data-price="<?php echo htmlspecialchars($product['price']); ?>" data-seller="<?php echo htmlspecialchars($product['seller_name']); ?>">
                     <img 
                         class="marketplace-image"
                         src="../assets/images/uploads/<?php echo htmlspecialchars($product['image']); ?>"
-                        alt="<?php echo htmlspecialchars($product['title']); ?>"
+                        alt="<?php echo htmlspecialchars($product['name']); ?>"
                     >
 
                     <div class="marketplace-content">
                         <div class="marketplace-card-top">
-                            <span class="marketplace-tag"><?php echo htmlspecialchars($product['category']); ?></span>
+                            <span class="marketplace-tag"><?php echo htmlspecialchars($product['category_name']); ?></span>
                             <span class="marketplace-date">R <?php echo number_format($product['price'], 2); ?></span>
                         </div>
 
-                        <h2><?php echo htmlspecialchars($product['title']); ?></h2>
+                        <h2><?php echo htmlspecialchars($product['name']); ?></h2>
 
                         <p class="marketplace-seller">
-                            Seller: <?php echo htmlspecialchars($product['username']); ?>
+                            Seller: <?php echo htmlspecialchars($product['seller_name']); ?>
                         </p>
 
                         <a class="btn btn-primary" href="view.php?id=<?php echo $product['id']; ?>">

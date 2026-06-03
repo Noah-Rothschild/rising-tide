@@ -13,7 +13,7 @@ $user_id = $_SESSION['user_id'];
 
 $stmt = $conn->prepare("
     SELECT * FROM products
-    WHERE id = ? AND user_id = ?
+    WHERE id = ? AND seller_id = ?
 ");
 
 $stmt->bind_param("ii", $product_id, $user_id);
@@ -28,9 +28,6 @@ if (!$product) {
     die("Product not found or unauthorized.");
 }
 
-/* =========================
-   DELETE IMAGE
-========================= */
 
 $imagePath = "../assets/images/uploads/" . $product['image'];
 

@@ -31,13 +31,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <link rel="stylesheet" href="/rising-tide/assets/css/marketplace.css">
 
+    <link rel="stylesheet" href="/rising-tide/assets/css/product.css">
+
 </head>
 
 <body>
 
 <nav class="navbar">
 
-    <!-- LEFT -->
 
     <div class="navbar-left">
 
@@ -47,7 +48,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
     </div>
 
-    <!-- CENTER -->
 
     <div class="navbar-center">
 
@@ -65,11 +65,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
     </div>
 
-    <!-- RIGHT -->
 
     <div class="navbar-right">
-
-        <!-- SEARCH -->
 
         <form class="navbar-search">
 
@@ -80,7 +77,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
         </form>
 
-        <!-- ACCOUNT -->
 
         <?php if(isset($_SESSION['user_id'])): ?>
 
