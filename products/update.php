@@ -3,15 +3,17 @@ session_start();
 
 include('../config/db.php');
 
-$user_id = $_SESSION['user_id'];
+$seller_id = $_SESSION['user_id'];
 $product_id = $_POST['id'];
 
-$title = $_POST['title'];
+$name = $_POST['name'];
 $description = $_POST['description'];
 $price = $_POST['price'];
+$stock = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
+$category_id = !empty($_POST['category_id']) ? intval($_POST['category_id']) : null;
 
-$stmt = $conn->prepare("SELECT image FROM products WHERE id = ? AND user_id = ?");
-$stmt->bind_param("ii", $product_id, $user_id);
+$stmt = $conn->prepare("SELECT image FROM products WHERE id = ? AND seller_id = ?");
+$stmt->bind_param("ii", $product_id, $seller_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $product = $result->fetch_assoc();
@@ -26,7 +28,7 @@ $current_image = $product['image'];
 $imageName = $current_image; // Default to current image
 
 if (!empty($_FILES['image']['name'])) {
-    $imageName = time() . '_' . $_FILES['image']['name'];
+    $imageName = time() . '_' . basename($_FILES['image']['name']);
     $target = "../assets/images/uploads/" . $imageName;
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
@@ -42,22 +44,24 @@ if (!empty($_FILES['image']['name'])) {
 
 $updateStmt = $conn->prepare("
     UPDATE products
-    SET title = ?, description = ?, price = ?, image = ?
-    WHERE id = ? AND user_id = ?
+    SET name = ?, description = ?, price = ?, stock = ?, category_id = ?, image = ?
+    WHERE id = ? AND seller_id = ?
 ");
 
 $updateStmt->bind_param(
-    "ssdssi",
-    $title,
+    "ssdissii",
+    $name,
     $description,
     $price,
+    $stock,
+    $category_id,
     $imageName,
     $product_id,
-    $user_id
+    $seller_id
 );
 
 if ($updateStmt->execute()) {
-    header("Location: list.php");
+    header("Location: ../user/dashboard.php");
     exit();
 } else {
     echo "Error updating product.";

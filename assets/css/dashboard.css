@@ -108,6 +108,47 @@
   gap: 24px;
 }
 
+.dashboard-table {
+  width: 100%;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-table-header,
+.dashboard-table-row {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr 2fr;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dashboard-table-header {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #333;
+}
+
+.dashboard-table-row:last-child {
+  border-bottom: none;
+}
+
+.dashboard-table-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-table-row .actions {
+  justify-content: flex-end;
+}
+
+.dashboard-table-row .btn {
+  margin-left: 0;
+}
+
 .dashboard-card {
   background: white;
   border-radius: 18px;

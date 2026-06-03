@@ -7,20 +7,20 @@
         <div class="auth-card">
 
             <div class="auth-title-box">
-                <h1>CREATE ACCOUNT</h1>
+                <h1>SELLER REGISTRATION</h1>
             </div>
 
             <p class="auth-subtitle">
-                Join Rising Tide and start selling today.
+                Join Rising Tide as a seller and grow your business.
             </p>
 
-            <form class="auth-form" action="process_register.php" method="POST">
+            <form class="auth-form" action="process_register_seller.php" method="POST">
 
                 <div>
                     <label>Full Name</label>
                     <input
                         type="text"
-                        name="username"
+                        name="name"
                         placeholder="Enter your full name"
                         required
                     >
@@ -37,6 +37,16 @@
                 </div>
 
                 <div>
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+                </div>
+
+                <div>
                     <label>Password</label>
                     <input
                         type="password"
@@ -47,7 +57,7 @@
                 </div>
 
                 <button class="auth-btn-primary" type="submit">
-                    Register
+                    Register as Seller
                 </button>
 
             </form>
@@ -67,7 +77,7 @@
 
         <img
             src="../assets/images/login-art.png"
-            alt="Register Art"
+            alt="Seller Registration Art"
         >
 
     </div>

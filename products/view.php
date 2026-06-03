@@ -60,20 +60,24 @@ $product = $result->fetch_assoc();
                 <span><strong>Listed:</strong> <?php echo date("d M Y", strtotime($product['created_at'])); ?></span>
             </div>
 
+            <?php
+                $hasStock = $product['stock'] === null || $product['stock'] > 0;
+                $stockLabel = $product['stock'] === null
+                    ? 'Available'
+                    : ($product['stock'] > 0 ? 'In stock' : 'Out of stock');
+            ?>
+
             <div class="product-price-row">
                 <span class="product-price">R <?php echo number_format($product['price'], 2); ?></span>
-                <span class="product-availability <?php echo isset($product['stock']) && $product['stock'] > 0 ? 'in-stock' : 'out-of-stock'; ?>">
-                    <?php if (isset($product['stock']) && $product['stock'] > 0): ?>
-                        In stock
-                    <?php else: ?>
-                        Out of stock
-                    <?php endif; ?>
+                <span class="product-availability <?php echo $hasStock ? 'in-stock' : 'out-of-stock'; ?>">
+                    <?php echo $stockLabel; ?>
                 </span>
             </div>
 
             <div class="product-buy-box">
 
-                <form class="product-purchase" method="POST" action="#">
+                <form class="product-purchase" id="addToCartForm" method="POST" action="add_to_cart.php">
+                    <input type="hidden" name="product_id" value="<?php echo intval($product['id']); ?>">
                     <div class="quantity-group">
                         <label for="quantity">Qty:</label>
                         <input
@@ -82,10 +86,8 @@ $product = $result->fetch_assoc();
                             name="quantity"
                             min="1"
                             value="1"
-                            <?php if (isset($product['stock']) && $product['stock'] > 0): ?>
+                            <?php if ($product['stock'] !== null && $product['stock'] > 0): ?>
                                 max="<?php echo intval($product['stock']); ?>"
-                            <?php else: ?>
-                                disabled
                             <?php endif; ?>
                         >
                     </div>
@@ -94,7 +96,8 @@ $product = $result->fetch_assoc();
                         <button
                             type="submit"
                             class="btn btn-primary btn-full"
-                            <?php if (isset($product['stock']) && $product['stock'] <= 0): ?>disabled<?php endif; ?>
+                            id="addToCartBtn"
+                            <?php if (!$hasStock): ?>disabled<?php endif; ?>
                         >
                             Add to Cart
                         </button>
@@ -122,3 +125,7 @@ $product = $result->fetch_assoc();
 </div>
 
 <?php include('../includes/footer.php'); ?>
+
+<div id="toast-container"></div>
+
+<script src="../assets/js/script.js"></script>

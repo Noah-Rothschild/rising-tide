@@ -69,3 +69,22 @@ a {
 .btn-danger:hover {
   background: #d83b47;
 }
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  background: #333;
+  color: white;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.toast.success {
+  background: #28a745;
+}

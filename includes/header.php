@@ -33,6 +33,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <link rel="stylesheet" href="/rising-tide/assets/css/product.css">
 
+     <link rel="stylesheet" href="/rising-tide/assets/css/index.css">
+
 </head>
 
 <body>
@@ -57,6 +59,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <a href="/rising-tide/products/marketplace.php">
             Marketplace
+        </a>
+
+        <a href="/rising-tide/products/cart.php">
+            Cart
         </a>
 
         <a href="/rising-tide/products/create.php">

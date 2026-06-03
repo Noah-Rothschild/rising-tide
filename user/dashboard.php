@@ -121,57 +121,40 @@ $result = $stmt->get_result();
 
             </div>
 
-            <div class="dashboard-grid">
+            <div class="dashboard-table">
 
-                <?php while($row = $result->fetch_assoc()): ?>
+                <div class="dashboard-table-header">
+                    <span>Product</span>
+                    <span>Stock</span>
+                    <span>Price</span>
+                    <span>Actions</span>
+                </div>
 
-                    <div class="dashboard-card">
-
-                        <img
-                            class="product-image"
-                            src="../assets/images/uploads/<?php echo htmlspecialchars($row['image']); ?>"
-                            alt=""
-                        >
-
-                        <div class="dashboard-card-content">
-
-                            <h2>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while($row = $result->fetch_assoc()): ?>
+                        <div class="dashboard-table-row">
+                            <span class="dashboard-table-cell product-name">
                                 <?php echo htmlspecialchars($row['name']); ?>
-                            </h2>
-
-                            <p class="product-price">
-
+                            </span>
+                            <span class="dashboard-table-cell stock">
+                                <?php echo intval($row['stock']); ?>
+                            </span>
+                            <span class="dashboard-table-cell price">
                                 R<?php echo number_format($row['price'], 2); ?>
-
-                            </p>
-
-                            <div class="card-buttons">
-
-                                <a
-                                    class="btn btn-primary"
-                                    href="../products/edit.php?id=<?php echo $row['id']; ?>"
-                                >
-                                    Edit
-                                </a>
-
-                                <a
-                                    class="btn btn-danger"
-                                    href="../products/delete.php?id=<?php echo $row['id']; ?>"
-                                >
-                                    Delete
-                                </a>
-
+                            </span>
+                            <span class="dashboard-table-cell actions">
                                 <a class="btn btn-secondary" href="../products/edit.php?id=<?php echo $row['id']; ?>">
                                     Edit
                                 </a>
-
-                            </div>
-
+                                <a class="btn btn-danger" href="../products/delete.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Delete this product?')">
+                                    Delete
+                                </a>
+                            </span>
                         </div>
-
-                    </div>
-
-                <?php endwhile; ?>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>You have no product listings.</p>
+                <?php endif; ?>
 
             </div>
 

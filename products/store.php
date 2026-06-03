@@ -8,6 +8,7 @@ $seller_id = $_SESSION['user_id'];
 $name = $_POST['name']; 
 $description = $_POST['description'];
 $price = $_POST['price'];
+$stock = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
 $category_id = !empty($_POST['category_id']) ? intval($_POST['category_id']) : null;
 
 $imageName = null;
@@ -21,22 +22,23 @@ if (!empty($_FILES['image']['name'])) {
 
 $stmt = $conn->prepare("
     INSERT INTO products 
-    (seller_id, category_id, name, description, price, image)
-    VALUES (?, ?, ?, ?, ?, ?)
+    (seller_id, category_id, name, description, price, stock, image)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
 ");
 
 $stmt->bind_param(
-    "iissds",
+    "iissdis",
     $seller_id,
     $category_id,
     $name,
     $description,
     $price,
+    $stock,
     $imageName
 );
 
 if ($stmt->execute()) {
-    header("Location: list.php");
+    header("Location: ../user/dashboard.php");
     exit();
 } else {
     echo "Error creating product: " . $stmt->error;

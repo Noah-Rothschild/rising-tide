@@ -5,7 +5,7 @@ include('../config/db.php');
 
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT * FROM products WHERE id = ? AND user_id = ?");
+$stmt = $conn->prepare("SELECT * FROM products WHERE id = ? AND seller_id = ?");
 $stmt->bind_param("ii", $_GET['id'], $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -14,6 +14,7 @@ $product = $result->fetch_assoc();
 if (!$product) {
     echo "<p>Product not found or you don't have permission to edit it.</p>";
 } else {
+    $categories = mysqli_query($conn, "SELECT id, name FROM categories");
 ?>
 
 <div class="form-container">
@@ -28,8 +29,8 @@ if (!$product) {
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($product['id']); ?>">
 
         <div class="form-group">
-            <label for="title">Product Title:</label>
-            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($product['title']); ?>" required>
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['name']); ?>" required>
         </div>
 
         <div class="form-group">
@@ -40,6 +41,22 @@ if (!$product) {
         <div class="form-group">
             <label for="price">Price:</label>
             <input type="number" id="price" name="price" step="0.01" value="<?php echo htmlspecialchars($product['price']); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" min="0" value="<?php echo intval($product['stock']); ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="category_id">Category:</label>
+            <select id="category_id" name="category_id">
+                <?php while ($row = mysqli_fetch_assoc($categories)): ?>
+                    <option value="<?php echo intval($row['id']); ?>" <?php echo $row['id'] == $product['category_id'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($row['name']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
         </div>
 
         <div class="form-group">
