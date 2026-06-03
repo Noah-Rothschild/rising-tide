@@ -69,7 +69,7 @@ if (!isset($_SESSION['user_id'])) {
     <?php else: ?>
         <div class="cart-wrapper">
             <section class="cart-items">
-                <?php foreach ($cart as $item): ?>
+                <?php foreach ($items as $item): ?>
                     <article class="cart-item">
                         <img class="cart-item-image" src="../assets/images/uploads/<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
                         <div class="cart-item-details">
@@ -84,24 +84,44 @@ if (!isset($_SESSION['user_id'])) {
 
             <aside class="cart-summary">
                 <div class="cart-summary-box">
-                    <h2>Order summary</h2>
-                    <div class="cart-summary-row">
-                        <span>Items total</span>
-                        <strong>R <?php echo number_format($total, 2); ?></strong>
-                    </div>
+                    <h2>Shipping Details</h2>
+                    
+                    <form method="POST" action="process_payment.php">
+                        <div class="form-group">
+                            <label for="shipping_address">Street Address</label>
+                            <input type="text" id="shipping_address" name="shipping_address" required placeholder="Enter your street address">
+                        </div>
 
-                    <div class="cart-summary-row">
-                        <span>Shipping</span>
-                        <strong>Free</strong>
-                    </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required placeholder="Enter your city">
+                        </div>
 
-                    <div class="cart-summary-total">
-                        <span>Total</span>
-                        <strong>R <?php echo number_format($total, 2); ?></strong>
-                    </div>
+                        <div class="form-group">
+                            <label for="postal_code">Postal Code</label>
+                            <input type="text" id="postal_code" name="postal_code" required placeholder="Enter your postal code">
+                        </div>
 
-                    <form method="POST" action="checkout.php">
-                        <button type="submit" class="btn btn-primary btn-full">Confirm Purchase</button>
+                        <h2 style="margin-top: 30px; margin-bottom: 20px;">Order Summary</h2>
+                        
+                        <div class="cart-summary-row">
+                            <span>Items total</span>
+                            <strong>R <?php echo number_format($total, 2); ?></strong>
+                        </div>
+
+                        <div class="cart-summary-row">
+                            <span>Shipping</span>
+                            <strong>Free</strong>
+                        </div>
+
+                        <div class="cart-summary-total">
+                            <span>Total</span>
+                            <strong>R <?php echo number_format($total, 2); ?></strong>
+                        </div>
+
+                        <input type="hidden" name="total_amount" value="<?php echo $total; ?>">
+
+                        <button type="submit" class="btn btn-primary btn-full" style="margin-top: 20px;">Proceed to PayFast</button>
                     </form>
                 </div>
             </aside>
