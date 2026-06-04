@@ -1,0 +1,194 @@
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+
+.admin-sidebar h2 {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* =========================
+   ADMIN TABLES
+========================= */
+
+.admin-table {
+  width: 100%;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.admin-table-header,
+.admin-table-row {
+  display: grid;
+  grid-template-columns:
+    0.7fr
+    1.5fr
+    2fr
+    1fr
+    1.2fr;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-table-header {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #333;
+}
+
+.admin-table-row:last-child {
+  border-bottom: none;
+}
+
+.admin-table-row:hover {
+  background: #fafafa;
+}
+
+/* =========================
+   PRODUCTS TABLE
+========================= */
+
+.products-table .admin-table-header,
+.products-table .admin-table-row {
+  grid-template-columns:
+    2fr
+    1.5fr
+    1fr
+    1fr
+    1fr;
+}
+
+/* =========================
+   ORDERS TABLE
+========================= */
+
+.orders-table .admin-table-header,
+.orders-table .admin-table-row {
+  grid-template-columns:
+    1fr
+    2fr
+    1fr
+    1fr
+    1fr;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.admin-actions .btn {
+  min-width: 80px;
+}
+
+/* =========================
+   ADMIN PAGE TITLES
+========================= */
+
+.admin-title {
+  margin-bottom: 25px;
+}
+
+.admin-title h1 {
+  margin-bottom: 8px;
+}
+
+.admin-title p {
+  color: #666;
+}
+
+/* =========================
+   ADMIN STATS
+========================= */
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.admin-stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.admin-stat-card h3 {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.admin-stat-card p {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* =========================
+   ROLE BADGES
+========================= */
+
+.role-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.role-admin {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.role-seller {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.role-buyer {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+  .admin-table-header,
+  .admin-table-row,
+  .products-table .admin-table-header,
+  .products-table .admin-table-row,
+  .orders-table .admin-table-header,
+  .orders-table .admin-table-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-table-header {
+    display: none;
+  }
+
+  .admin-table-row {
+    padding: 20px;
+  }
+
+  .admin-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+}

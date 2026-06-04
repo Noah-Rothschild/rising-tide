@@ -17,23 +17,23 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <title>Rising Tide</title>
 
-    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/global.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/forms.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/forms.css">
+    <link rel="stylesheet" href="../assets/css/auth.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/auth.css">
+    <link rel="stylesheet" href="../assets/css/marketplace.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/marketplace.css">
+    <link rel="stylesheet" href="../assets/css/product.css">
 
-    <link rel="stylesheet" href="/rising-tide/assets/css/product.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
 
-     <link rel="stylesheet" href="/rising-tide/assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
 
 </head>
 
@@ -44,7 +44,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div class="navbar-left">
 
-        <a href="/rising-tide/" class="logo">
+        <a href="/../" class="logo">
             Rising Tide
         </a>
 
@@ -53,15 +53,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div class="navbar-center">
 
-        <a href="/rising-tide/">
+        <a href="/../">
             Home
         </a>
 
-        <a href="/rising-tide/products/marketplace.php">
+        <a href="/../products/marketplace.php">
             Marketplace
         </a>
 
-        <a href="/rising-tide/products/create.php">
+        <a href="/../products/create.php">
             Sell
         </a>
 
@@ -79,8 +79,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
         </form>
 
-        <a href="/rising-tide/products/cart.php" class="cart-icon">
-            <img src="/rising-tide/assets/images/cart.jpg" alt="Cart">
+        <a href="/../products/cart.php" class="cart-icon">
+            <img src="../assets/images/cart.jpg" alt="Cart">
         </a>
 
 
@@ -96,15 +96,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 <div class="dropdown-content">
 
-                    <a href="/rising-tide/user/dashboard.php">
+                    <a href="/../user/dashboard.php">
                         Dashboard
                     </a>
 
-                    <a href="/rising-tide/user/dashboard.php#settings">
+                    <a href="/../user/dashboard.php#settings">
                         Account Settings
                     </a>
 
-                    <a href="/rising-tide/auth/logout.php">
+                    <a href="/../auth/logout.php">
                         Sign Out
                     </a>
 
@@ -114,7 +114,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <?php else: ?>
 
-            <a class="login-link" href="/rising-tide/auth/login.php">
+            <a class="login-link" href="/../auth/login.php">
                 Login
             </a>
 

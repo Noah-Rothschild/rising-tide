@@ -3,7 +3,7 @@
 <section class="hero">
     <div class="hero-overlay">
         <div class="hero-content">
-            <h1>Buy. Sell. Connect.</h1>
+            <h1>A rising tide lifts all boats.</h1>
 
             <p>
                 Join our community marketplace and discover
@@ -11,11 +11,11 @@
             </p>
 
             <div class="hero-buttons">
-                <a href="/rising-tide/auth/register_buyer.php" class="btn btn-browse">
+                <a href="/auth/register_buyer.php" class="btn btn-browse">
                     Browse Marketplace
                 </a>
 
-                <a href="/rising-tide/auth/register_seller.php" class="btn btn-sell">
+                <a href="/auth/register_seller.php" class="btn btn-sell">
                     Start Selling
                 </a>
             </div>
