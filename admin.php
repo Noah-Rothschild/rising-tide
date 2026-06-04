@@ -10,18 +10,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 $tab = $_GET['tab'] ?? 'users';
 
-/*
-    DATA QUERIES
-*/
-
-// USERS
 $usersResult = $conn->query("
-    SELECT id, username, email, role, created_at 
+    SELECT *
     FROM users 
     ORDER BY id DESC
 ");
 
-// PRODUCTS
 $productsResult = $conn->query("
     SELECT p.*, u.username AS seller_name
     FROM products p
@@ -29,17 +23,17 @@ $productsResult = $conn->query("
     ORDER BY p.created_at DESC
 ");
 
-// ORDERS
 $ordersResult = $conn->query("
     SELECT * 
     FROM orders 
     ORDER BY created_at DESC
 ");
+
+
 ?>
 
 <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
     <aside class="dashboard-sidebar">
 
         <h2>Admin Panel</h2>
@@ -60,16 +54,16 @@ $ordersResult = $conn->query("
 
     <main class="dashboard-main">
 
-    <!-- ================= USERS ================= -->
     <?php if ($tab === 'users'): ?>
 
         <section class="dashboard-tab">
 
             <h1>Users</h1>
 
-            <div class="dashboard-table">
+            <div class="admin-table">
+                
 
-                <div class="dashboard-table-header">
+                <div class="admin-table-header">
                     <span>ID</span>
                     <span>Username</span>
                     <span>Email</span>
@@ -78,7 +72,7 @@ $ordersResult = $conn->query("
                 </div>
 
                 <?php while ($u = $usersResult->fetch_assoc()): ?>
-                <div class="dashboard-table-row">
+                <div class="admin-table-row">
                     <span><?= $u['id'] ?></span>
                     <span><?= htmlspecialchars($u['username']) ?></span>
                     <span><?= htmlspecialchars($u['email']) ?></span>
@@ -107,9 +101,9 @@ $ordersResult = $conn->query("
 
             <h1>Products</h1>
 
-            <div class="dashboard-table">
+            <div class="admin-table products-table">
 
-                <div class="dashboard-table-header">
+                <div class="admin-table-header">
                     <span>Name</span>
                     <span>Seller</span>
                     <span>Stock</span>
@@ -118,7 +112,7 @@ $ordersResult = $conn->query("
                 </div>
 
                 <?php while ($p = $productsResult->fetch_assoc()): ?>
-                <div class="dashboard-table-row">
+                <div class="admin-table-row">
                     <span><?= htmlspecialchars($p['name']) ?></span>
                     <span><?= htmlspecialchars($p['seller_name'] ?? 'Unknown') ?></span>
                     <span><?= intval($p['stock']) ?></span>
@@ -140,16 +134,15 @@ $ordersResult = $conn->query("
     <?php endif; ?>
 
 
-    <!-- ================= ORDERS ================= -->
     <?php if ($tab === 'orders'): ?>
 
         <section class="dashboard-tab">
 
             <h1>Orders</h1>
 
-            <div class="dashboard-table">
+            <div class="admin-table orders-table">
 
-                <div class="dashboard-table-header">
+                <div class="admin-table-header">
                     <span>Order ID</span>
                     <span>Date</span>
                     <span>Total</span>
@@ -158,7 +151,7 @@ $ordersResult = $conn->query("
                 </div>
 
                 <?php while ($o = $ordersResult->fetch_assoc()): ?>
-                <div class="dashboard-table-row">
+                <div class="admin-table-row">
                     <span>#<?= $o['id'] ?></span>
                     <span><?= htmlspecialchars($o['created_at']) ?></span>
                     <span>R<?= number_format($o['total_amount'], 2) ?></span>

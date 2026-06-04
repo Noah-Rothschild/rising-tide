@@ -1,5 +1,3 @@
-
-
 .dashboard-layout {
   display: flex;
 
@@ -25,7 +23,6 @@
 .dashboard-sidebar h2 {
   margin-bottom: 20px;
 }
-
 
 .sidebar-btn {
   border: none;
@@ -69,15 +66,9 @@
   overflow-y: auto;
 }
 
-
-.dashboard-tab {
-  display: none;
-}
-
 .active-tab {
   display: block;
 }
-
 
 .products-header {
   display: flex;
@@ -185,7 +176,6 @@
   flex: 1;
 }
 
-
 .stat-card {
   background: white;
 
@@ -210,8 +200,6 @@
   color: #111;
 }
 
-
-
 .analytics-placeholder {
   height: 300px;
 
@@ -231,8 +219,6 @@
 
   border-radius: 10px 10px 0 0;
 }
-
-
 
 @media (max-width: 900px) {
   .dashboard-layout {

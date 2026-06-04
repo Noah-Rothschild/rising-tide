@@ -17,23 +17,23 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <title>Rising Tide</title>
 
-    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/global.css">
 
-    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/navbar.css">
 
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/dashboard.css">
 
-    <link rel="stylesheet" href="../assets/css/forms.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/forms.css">
 
-    <link rel="stylesheet" href="../assets/css/auth.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/auth.css">
 
-    <link rel="stylesheet" href="../assets/css/marketplace.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/marketplace.css">
 
-    <link rel="stylesheet" href="../assets/css/product.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/product.css">
 
-    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/index.css">
 
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="/rising-tide/assets/css/admin.css">
 
 </head>
 
@@ -57,7 +57,7 @@ if (session_status() === PHP_SESSION_NONE) {
             Home
         </a>
 
-        <a href="/../products/marketplace.php">
+        <a href="/rising-tide/products/marketplace.php">
             Marketplace
         </a>
 
@@ -80,7 +80,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </form>
 
         <a href="/../products/cart.php" class="cart-icon">
-            <img src="../assets/images/cart.jpg" alt="Cart">
+            <img src="/rising-tide/assets/images/cart.jpg" alt="Cart">
         </a>
 
 
@@ -96,15 +96,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 <div class="dropdown-content">
 
-                    <a href="/../user/dashboard.php">
+                    <a href="/rising-tide/user/dashboard.php">
                         Dashboard
                     </a>
 
-                    <a href="/../user/dashboard.php#settings">
+                    <a href="/rising-tide/user/dashboard.php#settings">
                         Account Settings
                     </a>
 
-                    <a href="/../auth/logout.php">
+                    <a href="/rising-tide/auth/logout.php">
                         Sign Out
                     </a>
 
