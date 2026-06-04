@@ -6,7 +6,7 @@ include('../config/db.php');
 $id = $_SESSION['user_id'];
 $role = $_SESSION['role'] ?? 'buyer';
 
-// Seller product count and list
+
 $totalProducts = 0;
 $productsResult = null;
 if ($role === 'seller') {
@@ -22,7 +22,6 @@ if ($role === 'seller') {
     $productsResult = $stmt->get_result();
 }
 
-// Orders: buyers see their orders; sellers see orders that include their items
 $orders = [];
 if ($role === 'buyer') {
     $ordersStmt = $conn->prepare("SELECT * FROM orders WHERE buyer_id = ? ORDER BY created_at DESC");

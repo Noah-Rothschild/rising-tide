@@ -18,8 +18,6 @@
 
             <form class="auth-form" action="process_login.php" method="POST">
 
-                <!-- EMAIL -->
-
                 <div>
                     <label>Email</label>
 
@@ -31,11 +29,8 @@
                     >
                 </div>
 
-                <!-- PASSWORD -->
-
                 <div>
                     <label>Password</label>
-
                     <input
                         type="password"
                         name="password"
@@ -43,8 +38,6 @@
                         required
                     >
                 </div>
-
-                <!-- OPTIONS -->
 
                 <div class="auth-options">
 
@@ -58,8 +51,6 @@
                     </a>
 
                 </div>
-
-                <!-- BUTTONS -->
 
                 <button class="auth-btn-primary" type="submit">
                     Sign in
