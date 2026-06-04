@@ -1,7 +1,11 @@
 Website Link: https://rising-tide.freedev.app/
+
 Github Repository: https://github.com/Noah-Rothschild/rising-tide
+
 Test buyer: buyer@rising-tide.com	Password: password
+
 Test seller: clothingco@rising-tide.com 	Password: password
+
 Admin: admin@rising-tide.com		Password: admin
 
 Introduction
